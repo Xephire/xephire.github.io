@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');  /* Roboto Mono Font*/
+
+body {
+  text-align: center;
+  font-family: Roboto Mono;
+  background-color: #171812;
+  color: #A6E22E;
+  justify-content: space-between;
+
+  position: absolute;
+  top:50%;
+  transform: translate(0, -50%);
+}
+
+a {
+  color: #A6E22E;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #407C00; 
+}
+
+ul {
+  padding-left: 0;
+  text-align: center;
+  list-style-position: inside;
+}
+
+img#link_icon:hover {
+  filter:brightness(50%);
+}
