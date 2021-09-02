@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="eng">
+
+<head>
+    <title>gabriel pery | unzipper</title>
+    <link rel="icon" href="../../src/icon.png">
+    <link rel="stylesheet" href="../style.css">
+</head>
+
+<body onload="get_code()">
+    <h2 class="title"><u>unzipper, made in python</u></h2>
+    <div><a href="https://github.com/Xephire/Unzipper" target="_blank"><h3><u>github link</u></h3></a></div>
+    <div class="description">
+        <h4>
+            a simple python program which allows the user to right-click anywhere in any directory, and be given the option to extract all archived files.
+        </h4>
+    </div>
+
+    <div id="source-code">
+        <h4>
+            main script:
+        </h4>
+        <h6 id="code">
+            import patoolib, ctypes, logging, os
+            from patoolib.util import PatoolError
+            from glob import glob
+            
+            if not os.path.exists(os.getenv('LOCALAPPDATA') + '\\Programs\\Unzipper\\errorlog.log'):
+                os.makedirs(os.getenv('LOCALAPPDATA') + '\\Programs\\Unzipper\\')
+            logging.basicConfig(filename=os.getenv('LOCALAPPDATA') + '\\Programs\\Unzipper\\errorlog.log', level=logging.ERROR, force=True, format='%(asctime)s %(levelname)s %(name)s %(message)s')
+            
+            def main():
+                """
+                Gets the current dir, and unzips all .zip files inside, placing them in a folder.
+                """
+            
+                cwd = os.getcwd()
+                fileTypes = ['.zip','.rar','.7z']
+                zipFiles = list()
+                for fileType in fileTypes:
+                    zipFiles.extend(glob(cwd+r'\\*{}'.format(fileType)))
+            
+                error = False
+                filesExtracted = 0
+            
+                for file in zipFiles:
+                    fileName = os.path.basename(file)
+                    path = cwd+r'\\Unzipped\\'+os.path.splitext(fileName)[0]
+                    try:
+                        if not os.path.exists(path):
+                            os.makedirs(path)
+                        patoolib.extract_archive(file, outdir=path)
+                        filesExtracted += 1
+                    except PatoolError as e:
+                        logging.error(e)
+                    except Exception as e:
+                        logging.error(e)
+                        error = True
+            
+                if error:
+                    ctypes.windll.user32.MessageBoxW(0, "One or multiple exceptions occured, this could be due to files being corrupted or a file requiring a password", "An error has occured", 16)
+                if filesExtracted >= 1:
+                    ctypes.windll.user32.MessageBoxW(0, f"{filesExtracted} File extraction(s) completed.", "Completed", 0)
+            
+            
+            if __name__ == "__main__":
+                main()
+        </h6>
+        <h4>
+            add to registry:
+        </h4>
+        <h6 id="code">
+            import os
+            import winreg as reg
+            import glob
+
+            # Get path of current working directory and python.exe
+            cwd = os.getcwd()
+
+            # Get path of main exe to be added to context menu (prioritises the first in alphabetical order)
+            exe = glob.glob(f"{cwd}\\Unzipper*.exe")[0]
+            filename = os.path.splitext(os.path.basename(exe))[0]
+
+            # Set the path of the context menu (right-click menu)
+            key_path = f'Directory\\Background\\shell\\{filename}\\'
+
+            # Create outer key
+            key = reg.CreateKey(reg.HKEY_CLASSES_ROOT, key_path)
+            reg.SetValue(key, '', reg.REG_SZ, '&Uncompress all compressed files')
+
+            # create inner key
+            key1 = reg.CreateKey(key, r"command")
+            reg.SetValue(key1, '', reg.REG_SZ, exe)
+            reg.SetValue(key1, '', reg.REG_SZ, exe)  # hides terminal
+        </h6>
+
+        <div>
+            <h4>requirements:</h4>
+            <h5>
+                <ul>
+                    <li>
+                        <a href="https://github.com/Xephire/Unzipper/blob/main/7z.exe">7z.exe</a>
+                    </li>
+                </ul>
+            </h5>
+        </div>
+    </div>
+
+    <div class="links">
+        <h4>
+            <a id="github-link" href="https://github.com/xephire" target="_blank"><img id="github-link-icon" src="../../src/GitHub-logo.png" alt="The GitHub logo" style="height: 5%;width:5%;"></a>
+        </h4>
+    </div>
+    <div><a id="home" href="../index.html">back</a></div>
+</body>
+
+</html>

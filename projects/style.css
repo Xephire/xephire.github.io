@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono&display=swap');  /* Roboto Mono Font*/
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap'); /* Roboto Thin 100 Font */
+
+body {
+    text-align: center;
+    font-family: Roboto Mono;
+    background-color: #171812;
+    color: #A6E22E;
+    justify-content: space-between;
+}
+
+.projects {
+  position: relative;
+  top: 275px;
+}
+
+ul {
+    padding-left: 0;
+    text-align: center;
+    list-style-position: inside;
+  }
+
+a {
+color: #A6E22E;
+text-decoration: none;
+}
+
+a:hover {
+color: #407C00; 
+}
+
+#home {
+  position: relative;
+}
+
+.title {
+  position: relative;
+  top: 10%;
+}
+
+img#github-link-icon:hover {
+  filter:brightness(50%);
+}
+
+#github-link {
+  position: relative;
+}
+
+#source-code {
+  margin: auto;
+  border-radius: 15px;
+  background: #302f2f;
+  border:1px solid #407C00;
+  padding: 5px;
+  width: auto;
+  height: auto;
+
+  position: static;
+  top: 200px;
+}
+
+#code {
+  text-align: left; 
+  white-space: pre;
+}
